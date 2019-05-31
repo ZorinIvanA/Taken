@@ -1,0 +1,45 @@
+﻿<Page
+    x:Class="Taken3105.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Taken3105"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Width="400" Height="300" x:Name="TakenPage"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <local:Model></local:Model>
+    </Page.DataContext>
+    <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Restart" Grid.Column="0" Grid.Row="1" 
+                Command="{Binding RestartCommand}"/>
+        <TextBlock Text="{Binding Turns}" Grid.Column="1" Grid.Row="1"/>
+
+        <ItemsControl ItemsSource="{Binding Cubes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid MaximumRowsOrColumns="4" 
+                                           Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Value}" Height="40" Width="40"
+                            Margin="2" IsEnabled="{Binding ElementName=TakenPage,
+                                Path=DataContext.IsNotWin}"
+                            Command="{Binding ElementName=TakenPage, 
+                                Path=DataContext.MoveCommand}"
+                            CommandParameter="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Page>
